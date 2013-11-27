@@ -1,8 +1,8 @@
 package reader
 
 import (
-	"feig/feisc"
-	"feig/fetcp"
+	"github.com/fboyer/gofeig/feisc"
+	"github.com/fboyer/gofeig/fetcp"
 )
 
 // FETCP
