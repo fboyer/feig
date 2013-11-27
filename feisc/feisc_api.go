@@ -81,17 +81,17 @@ const (
 )
 
 // Administration functions for Reader Objects
-//sys	FEISC_NewReader(iPortHnd uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_NewReader
-//sys	FEISC_DeleteReader(iReaderHnd uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_DeleteReader
-//sys	FEISC_GetReaderList(iNext uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_GetReaderList
-//sys	FEISC_GetReaderPara(iReaderHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) [failretval<0] = feisc.FEISC_GetReaderPara
-//sys	FEISC_SetReaderPara(iReaderHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) [failretval<0] = feisc.FEISC_SetReaderPara
+//sys	FEISC_NewReader(iPortHnd int) (result int, err error) [failretval<0] = feisc.FEISC_NewReader
+//sys	FEISC_DeleteReader(iReaderHnd int) (result int, err error) [failretval<0] = feisc.FEISC_DeleteReader
+//sys	FEISC_GetReaderList(iNext int) (result int, err error) [failretval<0] = feisc.FEISC_GetReaderList
+//sys	FEISC_GetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetReaderPara
+//sys	FEISC_SetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) [failretval<0] = feisc.FEISC_SetReaderPara
 //sys	FEISC_GetDLLVersion(cVersion *byte) (err error) = feisc.FEISC_GetDLLVersion
-//sys	FEISC_GetErrorText(iErrorCode uint32, cErrorText *byte) (result uint32, err error) [failretval<0] = feisc.FEISC_GetErrorText
-//sys	FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result uint32, err error) [failretval<0] = feisc.FEISC_GetStatusText
+//sys	FEISC_GetErrorText(iErrorCode int, cErrorText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetErrorText
+//sys	FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetStatusText
 // To-Do: Add missing API calls
-// FEISC_AddEventHandler(iReaderHnd uint32, pInit *FEISC_EVENT_INIT) (result uint32, err erro) [failretval<0] = feisc.FEISC_AddEventHandler
-// FEISC_DelEventHandler(iReaderHnd uint32, pInit *FEISC_EVENT_INIT) (result uint32, err erro) [failretval<0] = feisc.FEISC_DelEventHandler
+// FEISC_AddEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err erro) [failretval<0] = feisc.FEISC_AddEventHandler
+// FEISC_DelEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err erro) [failretval<0] = feisc.FEISC_DelEventHandler
 
 // Functions for Plug-in objects to connect alternative port types
 // To-Do: Add missing API calls
@@ -106,18 +106,18 @@ const (
 // To-Do: Add missing API calls
 
 // Special communication functions
-//sys	FEISC_0x63_CPUReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err error) [failretval<0] = feisc.FEISC_0x63_CPUReset
-//sys	FEISC_0x65_SoftVersion(iReaderHnd uint32, cBusAdr byte, cVersion *byte, iDataFormat uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_0x65_SoftVersion
-//sys	FEISC_0x69_RFReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err error) [failretval<0] = feisc.FEISC_0x69_RFReset
-//sys	FEISC_0x6A_RFOnOff(iReaderHnd uint32, cBusAdr byte, cRF byte) (result uint32, err error) [failretval<0] = feisc.FEISC_0x6A_RFOnOff
-//sys	FEISC_0x80_ReadConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_0x80_ReadConfBlock
-//sys	FEISC_0x81_WriteConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_0x81_WriteConfBlock
-//sys	FEISC_0x82_SaveConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (result uint32, err error) [failretval<0] = feisc.FEISC_0x82_SaveConfBlock
-//sys	FEISC_0x83_ResetConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (result uint32, err error) [failretval<0] = feisc.FEISC_0x83_ResetConfBlock
-//sys	FEISC_0xB0_ISOCmd(iReaderHnd uint32, cBusAdr byte, cReqData *byte, iReqLen uint32, cRspData *byte, iRspLen *uint32, iDataFormat uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_0xB0_ISOCmd
+//sys	FEISC_0x63_CPUReset(iReaderHnd int, cBusAdr byte) (result int, err error) [failretval<0] = feisc.FEISC_0x63_CPUReset
+//sys	FEISC_0x65_SoftVersion(iReaderHnd int, cBusAdr byte, cVersion *byte, iDataFormat int) (result int, err error) [failretval<0] = feisc.FEISC_0x65_SoftVersion
+//sys	FEISC_0x69_RFReset(iReaderHnd int, cBusAdr byte) (result int, err error) [failretval<0] = feisc.FEISC_0x69_RFReset
+//sys	FEISC_0x6A_RFOnOff(iReaderHnd int, cBusAdr byte, cRF byte) (result int, err error) [failretval<0] = feisc.FEISC_0x6A_RFOnOff
+//sys	FEISC_0x80_ReadConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat int) (result int, err error) [failretval<0] = feisc.FEISC_0x80_ReadConfBlock
+//sys	FEISC_0x81_WriteConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat int) (result int, err error) [failretval<0] = feisc.FEISC_0x81_WriteConfBlock
+//sys	FEISC_0x82_SaveConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte) (result int, err error) [failretval<0] = feisc.FEISC_0x82_SaveConfBlock
+//sys	FEISC_0x83_ResetConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte) (result int, err error) [failretval<0] = feisc.FEISC_0x83_ResetConfBlock
+//sys	FEISC_0xB0_ISOCmd(iReaderHnd int, cBusAdr byte, cReqData *byte, iReqLen int, cRspData *byte, iRspLen *int, iDataFormat int) (result int, err error) [failretval<0] = feisc.FEISC_0xB0_ISOCmd
 
 // Special functions for asynchronous tasks
 // To-Do: Add missing API calls
-// FEISC_StartAsyncTask(iReaderHnd uint32, iTaskID uint32, pInit *FEISC_TASK_INIT, pInput *void) (result uint32, err error) [failretval<0] = feisc.FEISC_StartAsyncTask
-// FEISC_CancelAsyncTask(iReaderHnd uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_CancelAsyncTask
-// FEISC_TriggerAsyncTask(iReaderHnd uint32) (result uint32, err error) [failretval<0] = feisc.FEISC_TriggerAsyncTask
+// FEISC_StartAsyncTask(iReaderHnd int, iTaskID int, pInit *FEISC_TASK_INIT, pInput *void) (result int, err error) [failretval<0] = feisc.FEISC_StartAsyncTask
+// FEISC_CancelAsyncTask(iReaderHnd int) (result int, err error) [failretval<0] = feisc.FEISC_CancelAsyncTask
+// FEISC_TriggerAsyncTask(iReaderHnd int) (result int, err error) [failretval<0] = feisc.FEISC_TriggerAsyncTask

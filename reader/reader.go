@@ -1,4 +1,4 @@
-package feigreader
+package reader
 
 import (
 	"feig/feisc"
@@ -7,12 +7,12 @@ import (
 
 // FETCP
 func Connect(hostAddr string, port int) (socketHnd int, err error) {
-	socketHnd, err = FETCP_Connect(&([]byte(hostAddr))[0], uint32(port))
+	socketHnd, err = FETCP_Connect(&([]byte(hostAddr))[0], int(port))
 	return
 }
 
 func Disconnect(socketHnd int) (status int, err error) {
-	result, err = FETCP_DisConnect(uint32(socketHnd))
+	result, err = FETCP_DisConnect(int(socketHnd))
 	return
 }
 
@@ -42,32 +42,32 @@ func GetDLLVersion() (version string, err error) {
 // Name collision with FEISC
 func GetErrorText(errorCode int) (errorText string, err error) {
 	text := make([]byte, 256)
-	_, err = FETCP_GetErrorText(uint32(errorCode), &text[0])
+	_, err = FETCP_GetErrorText(int(errorCode), &text[0])
 	errorText = string(text[:])
 	return
 }
 
 func GetLastError(socketHnd int) (errorCode int, errorText string, result int, err error) {
 	text := make([]byte, 256)
-	result, err = FETCP_GetLastError(uint32(socketHnd), &errorCode, &text[0])
+	result, err = FETCP_GetLastError(int(socketHnd), &errorCode, &text[0])
 	errorText = string(text[:])
 	return
 }
 
 func GetSocketHnd(hostAddr string, port int) (socketHnd int, err error) {
-	socketHnd, err = FETCP_GetSocketHnd(&([]byte(hostAddr))[0], uint32(port))
+	socketHnd, err = FETCP_GetSocketHnd(&([]byte(hostAddr))[0], int(port))
 	return
 }
 
 func GetSocketParam(socketHnd int, param string) (value string, result int, err error) {
 	val := make([]byte, 128)
-	result, err = FETCP_GetSocketPara(uint32(socketHnd), &([]byte(param))[0], &val[0])
+	result, err = FETCP_GetSocketPara(int(socketHnd), &([]byte(param))[0], &val[0])
 	value = string(val[:])
 	return
 }
 
 func SetSocketParam(socketHnd int, param string, value string) (result int, err error) {
-	result, err = FETCP_SetSocketPara(uint32(socketHnd), &([]byte(param))[0], &([]byte(value))[0])
+	result, err = FETCP_SetSocketPara(int(socketHnd), &([]byte(param))[0], &([]byte(value))[0])
 	return
 }
 
@@ -88,17 +88,17 @@ func Receive(socketHnd int, recvBufLen int) (recvBuf string, err error) {
 
 // FEISC
 func NewReader(portHnd int) (readerHnd int, err error) {
-	readerHnd, err = FEISC_NewReader(uint32(portHnd))
+	readerHnd, err = FEISC_NewReader(int(portHnd))
 	return
 }
 
 func DeleteReader(readerHnd int) (result int, err error) {
-	result, err = FEISC_DeleteReader(uint32(readerHnd))
+	result, err = FEISC_DeleteReader(int(readerHnd))
 	return
 }
 
 func GetReaderList(nextReaderHnd int) (readerHnd int, err error) {
-	readerHnd, err = FEISC_GetReaderList(uint32(nextReaderHnd))
+	readerHnd, err = FEISC_GetReaderList(int(nextReaderHnd))
 	return
 }
 
@@ -113,7 +113,7 @@ func GetDLLVersion() (version string, err error) {
 // Name collision with FETCP
 func GetErrorText(errorCode int) (errorText string, result int, err error) {
 	text := make([]byte, 256)
-	result, err = FEISC_GetErrorText(uint32(errorCode), &text[0])
+	result, err = FEISC_GetErrorText(int(errorCode), &text[0])
 	errorText = string(text[:])
 	return
 }
@@ -127,18 +127,18 @@ func GetStatusText(status int) (statusText string, result int, err error) {
 
 func GetReaderParam(readerHnd int, param string) (value string, result int, err error) {
 	val := make([]byte, 128)
-	result, err = FEISC_GetReaderPara(uint32(readerHnd), &([]byte(param))[0], &val[0])
+	result, err = FEISC_GetReaderPara(int(readerHnd), &([]byte(param))[0], &val[0])
 	value = string(val[:])
 	return
 }
 
 func SetReaderParam(readerHnd int, param string, value string) (result int, err error) {
-	result, err = FEISC_SetReaderPara(uint32(readerHnd), &([]byte(param))[0], &([]byte(value))[0])
+	result, err = FEISC_SetReaderPara(int(readerHnd), &([]byte(param))[0], &([]byte(value))[0])
 	return
 }
 
 func ResetCPU(readerHnd int, busAddr byte) (status int, err error) {
-	status, err = FEISC_0x63_CPUReset(uint32(readerHnd), busAddr)
+	status, err = FEISC_0x63_CPUReset(int(readerHnd), busAddr)
 	return
 }
 
@@ -148,18 +148,18 @@ func GetSoftVersion(readerHnd int, busAddr byte, dataFormat int) (version string
 	} else {
 		ver := make([]byte, 15)
 	}
-	status, err = FEISC_0x65_SoftVersion(uint32(readerHnd), busAddr, &ver[0], uint32(dataFormat()))
+	status, err = FEISC_0x65_SoftVersion(int(readerHnd), busAddr, &ver[0], int(dataFormat()))
 	version = string(ver[:])
 	return
 }
 
 func ResetRF(readerHnd int, busAddr byte) (status int, err error) {
-	status, err = FEISC_0x69_RFReset(uint32(readerHnd), busAddr)
+	status, err = FEISC_0x69_RFReset(int(readerHnd), busAddr)
 	return
 }
 
 func SetRFOnOff(readerHnd int, busAddr byte, rfState bool) (status int, err error) {
-	status, err = FEISC_0x6A_RFOnOff(uint32(readerHnd), busAddr, byte(rfState))
+	status, err = FEISC_0x6A_RFOnOff(int(readerHnd), busAddr, byte(rfState))
 	return
 }
 
@@ -169,29 +169,29 @@ func ReadConfBlock(readerHnd int, busAddr byte, configAddr byte, dataFormat int)
 	} else {
 		block := make([]byte, 29)
 	}
-	status, err = FEISC_0x80_ReadConfBlock(uint32(readerHnd), busAddr, configAddr, &block[0], uint32(dataFormat))
+	status, err = FEISC_0x80_ReadConfBlock(int(readerHnd), busAddr, configAddr, &block[0], int(dataFormat))
 	configBlock = string(block[:])
 	return
 }
 
 func WriteConfBlock(readerHnd int, busAddr byte, configAddr byte, configBlock string, dataFormat int) (status int, err error) {
-	status, err = FEISC_0x81_WriteConfBlock(uint32(readerHnd), busAddr, byte(config), &([]byte(configBlock))[0], byte(dataFormat))
+	status, err = FEISC_0x81_WriteConfBlock(int(readerHnd), busAddr, byte(config), &([]byte(configBlock))[0], byte(dataFormat))
 	return
 }
 
 func SaveConfBlock(readerHnd int, busAddr byte, configAddr byte) (status int, err error) {
-	status, err = FEISC_0x82_SaveConfBlock(uint32(readerHnd), busAddr, configAddr)
+	status, err = FEISC_0x82_SaveConfBlock(int(readerHnd), busAddr, configAddr)
 	return
 }
 
 func ResetConfBlock(readerHnd int, busAddr byte, configAddr byte) (status int, err error) {
-	status, err = FEISC_0x83_ResetConfBlock(uint32(readerHnd), busAddr, configAddr)
+	status, err = FEISC_0x83_ResetConfBlock(int(readerHnd), busAddr, configAddr)
 	return
 }
 
-func SendISOCmd(readerHnd int, busAddr byte, reqData string, reqLen int, iDataFormat uint32) (respData string, respLen int, status int, err error) {
+func SendISOCmd(readerHnd int, busAddr byte, reqData string, reqLen int, iDataFormat int) (respData string, respLen int, status int, err error) {
 	resp := make([]byte, 1024)
-	status, err = FEISC_0xB0_ISOCmd(uint32(readerHnd), busAddr, &([]byte(reqData))[0], uint32(reqLen), &resp[0], &respLen)
+	status, err = FEISC_0xB0_ISOCmd(int(readerHnd), busAddr, &([]byte(reqData))[0], int(reqLen), &resp[0], &respLen)
 	respData = string(resp[:])
 	return
 }

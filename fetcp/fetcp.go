@@ -26,9 +26,9 @@ var (
 
 )
 
-func FETCP_Connect(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
+func FETCP_Connect(cHostAdr *byte, iPortNr int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_Connect.Addr(), 2, uintptr(unsafe.Pointer(cHostAdr)), uintptr(iPortNr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -39,9 +39,9 @@ func FETCP_Connect(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
 	return
 }
 
-func FETCP_Disconnect(iSocketHnd uint32) (result uint32, err error) {
+func FETCP_Disconnect(iSocketHnd int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_DisConnect.Addr(), 1, uintptr(iSocketHnd), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result != 0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -52,9 +52,9 @@ func FETCP_Disconnect(iSocketHnd uint32) (result uint32, err error) {
 	return
 }
 
-func FETCP_Detect(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
+func FETCP_Detect(cHostAdr *byte, iPortNr int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_Detect.Addr(), 2, uintptr(unsafe.Pointer(cHostAdr)), uintptr(iPortNr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -65,9 +65,9 @@ func FETCP_Detect(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
 	return
 }
 
-func FETCP_GetSocketState(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
+func FETCP_GetSocketState(cHostAdr *byte, iPortNr int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetSocketState.Addr(), 2, uintptr(unsafe.Pointer(cHostAdr)), uintptr(iPortNr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -78,9 +78,9 @@ func FETCP_GetSocketState(cHostAdr *byte, iPortNr uint32) (result uint32, err er
 	return
 }
 
-func FETCP_GetSocketList(iNext uint32) (result uint32, err error) {
+func FETCP_GetSocketList(iNext int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetSocketList.Addr(), 1, uintptr(iNext), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -96,9 +96,9 @@ func FETCP_GetDLLVersion(cVersion *byte) {
 	return
 }
 
-func FETCP_GetErrorText(iErrorCode uint32, cErrorText *byte) (result uint32, err error) {
+func FETCP_GetErrorText(iErrorCode int, cErrorText *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetErrorText.Addr(), 2, uintptr(iErrorCode), uintptr(unsafe.Pointer(cErrorText)), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -109,9 +109,9 @@ func FETCP_GetErrorText(iErrorCode uint32, cErrorText *byte) (result uint32, err
 	return
 }
 
-func FETCP_GetLastError(iSocketHnd uint32, iErrorCode *uint32, cErrorText *byte) (result uint32, err error) {
+func FETCP_GetLastError(iSocketHnd int, iErrorCode *int, cErrorText *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetLastError.Addr(), 3, uintptr(iSocketHnd), uintptr(unsafe.Pointer(iErrorCode)), uintptr(unsafe.Pointer(cErrorText)))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -122,9 +122,9 @@ func FETCP_GetLastError(iSocketHnd uint32, iErrorCode *uint32, cErrorText *byte)
 	return
 }
 
-func FETCP_GetSocketHnd(cHostAdr *byte, iPortNr uint32) (result uint32, err error) {
+func FETCP_GetSocketHnd(cHostAdr *byte, iPortNr int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetSocketHnd.Addr(), 2, uintptr(unsafe.Pointer(cHostAdr)), uintptr(iPortNr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -135,9 +135,9 @@ func FETCP_GetSocketHnd(cHostAdr *byte, iPortNr uint32) (result uint32, err erro
 	return
 }
 
-func FETCP_GetSocketPara(iSocketHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) {
+func FETCP_GetSocketPara(iSocketHnd int, cPara *byte, cValue *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_GetSocketPara.Addr(), 3, uintptr(iSocketHnd), uintptr(unsafe.Pointer(cPara)), uintptr(unsafe.Pointer(cValue)))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -148,9 +148,9 @@ func FETCP_GetSocketPara(iSocketHnd uint32, cPara *byte, cValue *byte) (result u
 	return
 }
 
-func FETCP_SetSocketPara(iSocketHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) {
+func FETCP_SetSocketPara(iSocketHnd int, cPara *byte, cValue *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_SetSocketPara.Addr(), 3, uintptr(iSocketHnd), uintptr(unsafe.Pointer(cPara)), uintptr(unsafe.Pointer(cValue)))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -161,9 +161,9 @@ func FETCP_SetSocketPara(iSocketHnd uint32, cPara *byte, cValue *byte) (result u
 	return
 }
 
-func FETCP_Transceive(iSocketHnd uint32, cSendProt *byte, iSendLen uint32, recvBuf *byte, recvBufLen uint32) (result uint32, err error) {
+func FETCP_Transceive(iSocketHnd int, cSendProt *byte, iSendLen int, recvBuf *byte, recvBufLen int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall6(procFETCP_Transceive.Addr(), 5, uintptr(iSocketHnd), uintptr(unsafe.Pointer(cSendProt)), uintptr(iSendLen), uintptr(unsafe.Pointer(recvBuf)), uintptr(recvBufLen), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -174,9 +174,9 @@ func FETCP_Transceive(iSocketHnd uint32, cSendProt *byte, iSendLen uint32, recvB
 	return
 }
 
-func FETCP_Transmit(iSocketHnd uint32, cSendProt *byte, iSendLen uint32) (result uint32, err error) {
+func FETCP_Transmit(iSocketHnd int, cSendProt *byte, iSendLen int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_Transmit.Addr(), 3, uintptr(iSocketHnd), uintptr(unsafe.Pointer(cSendProt)), uintptr(iSendLen))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -187,9 +187,9 @@ func FETCP_Transmit(iSocketHnd uint32, cSendProt *byte, iSendLen uint32) (result
 	return
 }
 
-func FETCP_Receive(iSocketHnd uint32, cRecProt *byte, cRecLec uint32) (result uint32, err error) {
+func FETCP_Receive(iSocketHnd int, cRecProt *byte, cRecLec int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFETCP_Receive.Addr(), 3, uintptr(iSocketHnd), uintptr(unsafe.Pointer(cRecProt)), uintptr(cRecLec))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)

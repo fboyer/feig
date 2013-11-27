@@ -29,9 +29,9 @@ var (
 
 )
 
-func FEISC_NewReader(iPortHnd uint32) (result uint32, err error) {
+func FEISC_NewReader(iPortHnd int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_NewReader.Addr(), 1, uintptr(iPortHnd), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -42,9 +42,9 @@ func FEISC_NewReader(iPortHnd uint32) (result uint32, err error) {
 	return
 }
 
-func FEISC_DeleteReader(iReaderHnd uint32) (result uint32, err error) {
+func FEISC_DeleteReader(iReaderHnd int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_DeleteReader.Addr(), 1, uintptr(iReaderHnd), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -55,9 +55,9 @@ func FEISC_DeleteReader(iReaderHnd uint32) (result uint32, err error) {
 	return
 }
 
-func FEISC_GetReaderList(iNext uint32) (result uint32, err error) {
+func FEISC_GetReaderList(iNext int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_GetReaderList.Addr(), 1, uintptr(iNext), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -68,9 +68,9 @@ func FEISC_GetReaderList(iNext uint32) (result uint32, err error) {
 	return
 }
 
-func FEISC_GetReaderPara(iReaderHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) {
+func FEISC_GetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_GetReaderPara.Addr(), 3, uintptr(iReaderHnd), uintptr(unsafe.Pointer(cPara)), uintptr(unsafe.Pointer(cValue)))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -81,9 +81,9 @@ func FEISC_GetReaderPara(iReaderHnd uint32, cPara *byte, cValue *byte) (result u
 	return
 }
 
-func FEISC_SetReaderPara(iReaderHnd uint32, cPara *byte, cValue *byte) (result uint32, err error) {
+func FEISC_SetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_SetReaderPara.Addr(), 3, uintptr(iReaderHnd), uintptr(unsafe.Pointer(cPara)), uintptr(unsafe.Pointer(cValue)))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -106,9 +106,9 @@ func FEISC_GetDLLVersion(cVersion *byte) (err error) {
 	return
 }
 
-func FEISC_GetErrorText(iErrorCode uint32, cErrorText *byte) (result uint32, err error) {
+func FEISC_GetErrorText(iErrorCode int, cErrorText *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_GetErrorText.Addr(), 2, uintptr(iErrorCode), uintptr(unsafe.Pointer(cErrorText)), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -119,9 +119,9 @@ func FEISC_GetErrorText(iErrorCode uint32, cErrorText *byte) (result uint32, err
 	return
 }
 
-func FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result uint32, err error) {
+func FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_GetStatusText.Addr(), 2, uintptr(ucStatus), uintptr(unsafe.Pointer(cStatusText)), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -132,9 +132,9 @@ func FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result uint32, err e
 	return
 }
 
-func FEISC_0x63_CPUReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err error) {
+func FEISC_0x63_CPUReset(iReaderHnd int, cBusAdr byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_0x63_CPUReset.Addr(), 2, uintptr(iReaderHnd), uintptr(cBusAdr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -145,9 +145,9 @@ func FEISC_0x63_CPUReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err er
 	return
 }
 
-func FEISC_0x65_SoftVersion(iReaderHnd uint32, cBusAdr byte, cVersion *byte, iDataFormat uint32) (result uint32, err error) {
+func FEISC_0x65_SoftVersion(iReaderHnd int, cBusAdr byte, cVersion *byte, iDataFormat int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall6(procFEISC_0x65_SoftVersion.Addr(), 4, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(unsafe.Pointer(cVersion)), uintptr(iDataFormat), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -158,9 +158,9 @@ func FEISC_0x65_SoftVersion(iReaderHnd uint32, cBusAdr byte, cVersion *byte, iDa
 	return
 }
 
-func FEISC_0x69_RFReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err error) {
+func FEISC_0x69_RFReset(iReaderHnd int, cBusAdr byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_0x69_RFReset.Addr(), 2, uintptr(iReaderHnd), uintptr(cBusAdr), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -171,9 +171,9 @@ func FEISC_0x69_RFReset(iReaderHnd uint32, cBusAdr byte) (result uint32, err err
 	return
 }
 
-func FEISC_0x6A_RFOnOff(iReaderHnd uint32, cBusAdr byte, cRF byte) (result uint32, err error) {
+func FEISC_0x6A_RFOnOff(iReaderHnd int, cBusAdr byte, cRF byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_0x6A_RFOnOff.Addr(), 3, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(cRF))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -184,9 +184,9 @@ func FEISC_0x6A_RFOnOff(iReaderHnd uint32, cBusAdr byte, cRF byte) (result uint3
 	return
 }
 
-func FEISC_0x80_ReadConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat uint32) (result uint32, err error) {
+func FEISC_0x80_ReadConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall6(procFEISC_0x80_ReadConfBlock.Addr(), 5, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(cConfAdr), uintptr(unsafe.Pointer(cConfBlock)), uintptr(iDataFormat), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -197,9 +197,9 @@ func FEISC_0x80_ReadConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, cC
 	return
 }
 
-func FEISC_0x81_WriteConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat uint32) (result uint32, err error) {
+func FEISC_0x81_WriteConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte, cConfBlock *byte, iDataFormat int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall6(procFEISC_0x81_WriteConfBlock.Addr(), 5, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(cConfAdr), uintptr(unsafe.Pointer(cConfBlock)), uintptr(iDataFormat), 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -210,9 +210,9 @@ func FEISC_0x81_WriteConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte, c
 	return
 }
 
-func FEISC_0x82_SaveConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (result uint32, err error) {
+func FEISC_0x82_SaveConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_0x82_SaveConfBlock.Addr(), 3, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(cConfAdr))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -223,9 +223,9 @@ func FEISC_0x82_SaveConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (r
 	return
 }
 
-func FEISC_0x83_ResetConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (result uint32, err error) {
+func FEISC_0x83_ResetConfBlock(iReaderHnd int, cBusAdr byte, cConfAdr byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_0x83_ResetConfBlock.Addr(), 3, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(cConfAdr))
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
@@ -236,9 +236,9 @@ func FEISC_0x83_ResetConfBlock(iReaderHnd uint32, cBusAdr byte, cConfAdr byte) (
 	return
 }
 
-func FEISC_0xB0_ISOCmd(iReaderHnd uint32, cBusAdr byte, cReqData *byte, iReqLen uint32, cRspData *byte, iRspLen *uint32, iDataFormat uint32) (result uint32, err error) {
+func FEISC_0xB0_ISOCmd(iReaderHnd int, cBusAdr byte, cReqData *byte, iReqLen int, cRspData *byte, iRspLen *int, iDataFormat int) (result int, err error) {
 	r0, _, e1 := syscall.Syscall9(procFEISC_0xB0_ISOCmd.Addr(), 7, uintptr(iReaderHnd), uintptr(cBusAdr), uintptr(unsafe.Pointer(cReqData)), uintptr(iReqLen), uintptr(unsafe.Pointer(cRspData)), uintptr(unsafe.Pointer(iRspLen)), uintptr(iDataFormat), 0, 0)
-	result = uint32(r0)
+	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
 			err = error(e1)
