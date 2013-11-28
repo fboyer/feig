@@ -80,6 +80,9 @@ const (
 	FEISC_TASK_CHANNEL_TYPE_NEW_TCP = 5
 )
 
+type FEISC_EVENT_INIT struct {
+}
+
 type FEISC_TASK_INIT struct {
 }
 
@@ -89,12 +92,12 @@ type FEISC_TASK_INIT struct {
 //sys	FEISC_GetReaderList(iNext int) (result int, err error) [failretval<0] = feisc.FEISC_GetReaderList
 //sys	FEISC_GetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetReaderPara
 //sys	FEISC_SetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int, err error) [failretval<0] = feisc.FEISC_SetReaderPara
-//sys	FEISC_GetDLLVersion(cVersion *byte) (err error) = feisc.FEISC_GetDLLVersion
+//sys	FEISC_GetDLLVersion(cVersion *byte) = feisc.FEISC_GetDLLVersion
 //sys	FEISC_GetErrorText(iErrorCode int, cErrorText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetErrorText
 //sys	FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetStatusText
 // To-Do: Add missing API calls
-// FEISC_AddEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err erro) [failretval<0] = feisc.FEISC_AddEventHandler
-// FEISC_DelEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err erro) [failretval<0] = feisc.FEISC_DelEventHandler
+// FEISC_AddEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err error) [failretval<0] = feisc.FEISC_AddEventHandler
+// FEISC_DelEventHandler(iReaderHnd int, pInit *FEISC_EVENT_INIT) (result int, err error) [failretval<0] = feisc.FEISC_DelEventHandler
 
 // Functions for Plug-in objects to connect alternative port types
 // To-Do: Add missing API calls
@@ -103,6 +106,8 @@ type FEISC_TASK_INIT struct {
 // To-Do: Add missing API calls
 
 // Query function
+//sys	 FEISC_GetLastStatus(iReaderHnd int, cStatusText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetLastStatus
+//sys	 FEISC_GetLastError(iReaderHnd int, iErrorCode *int, cErrorText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetLastError
 // To-Do: Add missing API calls
 
 // General communication functions
