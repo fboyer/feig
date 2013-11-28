@@ -80,6 +80,9 @@ const (
 	FEISC_TASK_CHANNEL_TYPE_NEW_TCP = 5
 )
 
+type FEISC_TASK_INIT struct {
+}
+
 // Administration functions for Reader Objects
 //sys	FEISC_NewReader(iPortHnd int) (result int, err error) [failretval<0] = feisc.FEISC_NewReader
 //sys	FEISC_DeleteReader(iReaderHnd int) (result int, err error) [failretval<0] = feisc.FEISC_DeleteReader
