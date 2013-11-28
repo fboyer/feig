@@ -5,14 +5,12 @@ import (
 )
 
 var (
-	hostAddr = "192.168.23.90"
-	port     = 4001
+	r = Reader{hostAddr: "192.168.20.112", port: 4001, busAddr: 255}
 )
 
-func TestConnect(t *testing.T) {
-	const hostAddr = "192.168.23.90"
-	if socketHnd, _ := Connect(hostAddr, 4001); socketHnd < 0 {
-		t.Errorf("Connect(%v) = %v", hostAddr, socketHnd)
+func TestReaderConnect(t *testing.T) {
+	if err := Connect(hostAddr, 4001); err != nil {
+		t.Errorf("Connect(%v) = %v", r.hostAddr, r.socketHnd)
 	}
 }
 
