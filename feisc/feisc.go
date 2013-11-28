@@ -17,6 +17,8 @@ var (
 	procFEISC_GetDLLVersion = modfeisc.NewProc("FEISC_GetDLLVersion")
 	procFEISC_GetErrorText = modfeisc.NewProc("FEISC_GetErrorText")
 	procFEISC_GetStatusText = modfeisc.NewProc("FEISC_GetStatusText")
+	procFEISC_GetLastStatus = modfeisc.NewProc("FEISC_GetLastStatus")
+	procFEISC_GetLastError = modfeisc.NewProc("FEISC_GetLastError")
 	procFEISC_0x63_CPUReset = modfeisc.NewProc("FEISC_0x63_CPUReset")
 	procFEISC_0x65_SoftVersion = modfeisc.NewProc("FEISC_0x65_SoftVersion")
 	procFEISC_0x69_RFReset = modfeisc.NewProc("FEISC_0x69_RFReset")
@@ -94,15 +96,8 @@ func FEISC_SetReaderPara(iReaderHnd int, cPara *byte, cValue *byte) (result int,
 	return
 }
 
-func FEISC_GetDLLVersion(cVersion *byte) (err error) {
-	r1, _, e1 := syscall.Syscall(procFEISC_GetDLLVersion.Addr(), 1, uintptr(unsafe.Pointer(cVersion)), 0, 0)
-	if r1 == 0 {
-		if e1 != 0 {
-			err = error(e1)
-		} else {
-			err = syscall.EINVAL
-		}
-	}
+func FEISC_GetDLLVersion(cVersion *byte) {
+	syscall.Syscall(procFEISC_GetDLLVersion.Addr(), 1, uintptr(unsafe.Pointer(cVersion)), 0, 0)
 	return
 }
 
@@ -121,6 +116,32 @@ func FEISC_GetErrorText(iErrorCode int, cErrorText *byte) (result int, err error
 
 func FEISC_GetStatusText(ucStatus byte, cStatusText *byte) (result int, err error) {
 	r0, _, e1 := syscall.Syscall(procFEISC_GetStatusText.Addr(), 2, uintptr(ucStatus), uintptr(unsafe.Pointer(cStatusText)), 0)
+	result = int(r0)
+	if result <0 {
+		if e1 != 0 {
+			err = error(e1)
+		} else {
+			err = syscall.EINVAL
+		}
+	}
+	return
+}
+
+func FEISC_GetLastStatus(iReaderHnd int, cStatusText *byte) (result int, err error) {
+	r0, _, e1 := syscall.Syscall(procFEISC_GetLastStatus.Addr(), 2, uintptr(iReaderHnd), uintptr(unsafe.Pointer(cStatusText)), 0)
+	result = int(r0)
+	if result <0 {
+		if e1 != 0 {
+			err = error(e1)
+		} else {
+			err = syscall.EINVAL
+		}
+	}
+	return
+}
+
+func FEISC_GetLastError(iReaderHnd int, iErrorCode *int, cErrorText *byte) (result int, err error) {
+	r0, _, e1 := syscall.Syscall(procFEISC_GetLastError.Addr(), 3, uintptr(iReaderHnd), uintptr(unsafe.Pointer(iErrorCode)), uintptr(unsafe.Pointer(cErrorText)))
 	result = int(r0)
 	if result <0 {
 		if e1 != 0 {
