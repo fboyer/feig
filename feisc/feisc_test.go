@@ -1,5 +1,0 @@
-package feisc
-
-import (
-	"testing"
-)
