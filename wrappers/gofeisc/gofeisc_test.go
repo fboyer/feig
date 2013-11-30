@@ -1,0 +1,5 @@
+package gofeisc
+
+import (
+	"testing"
+)
