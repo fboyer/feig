@@ -137,7 +137,7 @@ func SetReaderParam(readerHnd int, param string, value string) (result int, err 
 	return
 }
 
-func ResetCPU(readerHnd int) (status int, err error) {
+func ResetCpu(readerHnd int) (status int, err error) {
 	status, err = feisc.FEISC_0x63_CPUReset(readerHnd, busAddr)
 	return
 }
@@ -155,12 +155,12 @@ func GetSoftVersion(readerHnd int, busAddr byte, dataFormat int) (version string
 	return
 }
 
-func ResetRF(readerHnd int, busAddr byte) (status int, err error) {
+func ResetRf(readerHnd int, busAddr byte) (status int, err error) {
 	status, err = feisc.FEISC_0x69_RFReset(readerHnd, busAddr)
 	return
 }
 
-func SetRFOnOff(readerHnd int, busAddr byte, rfState byte) (status int, err error) {
+func SetRfOnOff(readerHnd int, busAddr byte, rfState byte) (status int, err error) {
 	status, err = feisc.FEISC_0x6A_RFOnOff(readerHnd, busAddr, byte(rfState))
 	return
 }

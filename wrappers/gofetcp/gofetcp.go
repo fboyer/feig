@@ -49,8 +49,8 @@ func Connect(hostAddr string, port int) (socketHnd int, err error) {
 	return
 }
 
-func Disconnect(socketHnd int) (status int, err error) {
-	status, err = fetcp.FETCP_Disconnect(socketHnd)
+func Disconnect(socketHnd int) (result int, err error) {
+	result, err = fetcp.FETCP_Disconnect(socketHnd)
 	return
 }
 
