@@ -2,7 +2,7 @@ package gofetcp
 
 import (
 	"bytes"
-	"github.com/fboyer/gofeisc/native/fetcp/fetcp"
+	"github.com/fboyer/gofeig/native/fetcp"
 )
 
 const (
