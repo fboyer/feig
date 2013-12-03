@@ -116,11 +116,11 @@ func GetLastError(readerHnd int) (errorCode int, errorText string, result int, e
 	return
 }
 
-func GetLastStatus(readerHnd int) (status int, statusText string, err error) {
+func GetLastState(readerHnd int) (result int, resultText string, err error) {
 	text := make([]byte, 128)
-	status, err = feisc.FEISC_GetLastStatus(readerHnd, &text[0])
+	result, err = feisc.FEISC_GetLastState(readerHnd, &text[0])
 	n := bytes.Index(text, []byte{0})
-	statusText = string(text[:n])
+	resultText = string(text[:n])
 	return
 }
 
@@ -137,65 +137,65 @@ func SetReaderParam(readerHnd int, param string, value string) (result int, err 
 	return
 }
 
-func ResetCpu(readerHnd int, busAddr byte) (status int, err error) {
-	status, err = feisc.FEISC_0x63_CPUReset(readerHnd, busAddr)
+func ResetCpu(readerHnd int, busAddr byte) (result int, err error) {
+	result, err = feisc.FEISC_0x63_CPUReset(readerHnd, busAddr)
 	return
 }
 
-func GetSoftVersion(readerHnd int, busAddr byte, dataFormat int) (version string, status int, err error) {
+func GetSoftVersion(readerHnd int, busAddr byte, dataFormat int) (version string, result int, err error) {
 	var ver []byte
 	if dataFormat == 0 {
 		ver = make([]byte, 8)
 	} else {
 		ver = make([]byte, 15)
 	}
-	status, err = feisc.FEISC_0x65_SoftVersion(readerHnd, busAddr, &ver[0], dataFormat)
+	result, err = feisc.FEISC_0x65_SoftVersion(readerHnd, busAddr, &ver[0], dataFormat)
 	n := bytes.Index(ver, []byte{0})
 	version = string(ver[:n])
 	return
 }
 
-func ResetRf(readerHnd int, busAddr byte) (status int, err error) {
-	status, err = feisc.FEISC_0x69_RFReset(readerHnd, busAddr)
+func ResetRf(readerHnd int, busAddr byte) (result int, err error) {
+	result, err = feisc.FEISC_0x69_RFReset(readerHnd, busAddr)
 	return
 }
 
-func SetRfOnOff(readerHnd int, busAddr byte, rfState byte) (status int, err error) {
-	status, err = feisc.FEISC_0x6A_RFOnOff(readerHnd, busAddr, byte(rfState))
+func SetRfOnOff(readerHnd int, busAddr byte, rfState byte) (result int, err error) {
+	result, err = feisc.FEISC_0x6A_RFOnOff(readerHnd, busAddr, byte(rfState))
 	return
 }
 
-func ReadConfBlock(readerHnd int, busAddr byte, configAddr byte, dataFormat int) (configBlock string, status int, err error) {
+func ReadConfBlock(readerHnd int, busAddr byte, configAddr byte, dataFormat int) (configBlock string, result int, err error) {
 	var block []byte
 	if dataFormat == 0 {
 		block = make([]byte, 15)
 	} else {
 		block = make([]byte, 29)
 	}
-	status, err = feisc.FEISC_0x80_ReadConfBlock(readerHnd, busAddr, configAddr, &block[0], dataFormat)
+	result, err = feisc.FEISC_0x80_ReadConfBlock(readerHnd, busAddr, configAddr, &block[0], dataFormat)
 	n := bytes.Index(block, []byte{0})
 	configBlock = string(block[:n])
 	return
 }
 
-func WriteConfBlock(readerHnd int, busAddr byte, configAddr byte, configBlock string, dataFormat int) (status int, err error) {
-	status, err = feisc.FEISC_0x81_WriteConfBlock(readerHnd, busAddr, configAddr, &([]byte(configBlock))[0], dataFormat)
+func WriteConfBlock(readerHnd int, busAddr byte, configAddr byte, configBlock string, dataFormat int) (result int, err error) {
+	result, err = feisc.FEISC_0x81_WriteConfBlock(readerHnd, busAddr, configAddr, &([]byte(configBlock))[0], dataFormat)
 	return
 }
 
-func SaveConfBlock(readerHnd int, busAddr byte, configAddr byte) (status int, err error) {
-	status, err = feisc.FEISC_0x82_SaveConfBlock(readerHnd, busAddr, configAddr)
+func SaveConfBlock(readerHnd int, busAddr byte, configAddr byte) (result int, err error) {
+	result, err = feisc.FEISC_0x82_SaveConfBlock(readerHnd, busAddr, configAddr)
 	return
 }
 
-func ResetConfBlock(readerHnd int, busAddr byte, configAddr byte) (status int, err error) {
-	status, err = feisc.FEISC_0x83_ResetConfBlock(readerHnd, busAddr, configAddr)
+func ResetConfBlock(readerHnd int, busAddr byte, configAddr byte) (result int, err error) {
+	result, err = feisc.FEISC_0x83_ResetConfBlock(readerHnd, busAddr, configAddr)
 	return
 }
 
-func SendIsoCmd(readerHnd int, busAddr byte, reqData string, reqLen int, dataFormat int) (respData string, respLen int, status int, err error) {
+func SendIsoCmd(readerHnd int, busAddr byte, reqData string, reqLen int, dataFormat int) (respData string, respLen int, result int, err error) {
 	resp := make([]byte, 1024)
-	status, err = feisc.FEISC_0xB0_ISOCmd(readerHnd, busAddr, &([]byte(reqData))[0], reqLen, &resp[0], &respLen, dataFormat)
+	result, err = feisc.FEISC_0xB0_ISOCmd(readerHnd, busAddr, &([]byte(reqData))[0], reqLen, &resp[0], &respLen, dataFormat)
 	n := bytes.Index(resp, []byte{0})
 	respData = string(resp[:n])
 	return

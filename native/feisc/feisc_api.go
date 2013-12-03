@@ -20,7 +20,7 @@ package feisc
 // To-Do: Add missing API calls
 
 // Query function
-//sys	 FEISC_GetLastStatus(iReaderHnd int, cStatusText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetLastStatus
+//sys	 FEISC_GetLastState(iReaderHnd int, cStatusText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetLastState
 //sys	 FEISC_GetLastError(iReaderHnd int, iErrorCode *int, cErrorText *byte) (result int, err error) [failretval<0] = feisc.FEISC_GetLastError
 // To-Do: Add missing API calls
 
