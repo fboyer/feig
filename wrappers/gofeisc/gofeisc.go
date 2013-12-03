@@ -2,7 +2,7 @@ package gofeisc
 
 import (
 	"bytes"
-	"github.com/fboyer/gofeisc/native/feisc/feisc"
+	"github.com/fboyer/gofeig/native/feisc"
 )
 
 const (
@@ -90,7 +90,7 @@ type FEISC_TASK_INIT struct {
 }
 
 // FEISC
-func NewReader(socketHnd int) (err error) {
+func NewReader(socketHnd int) (readerHnd int, err error) {
 	readerHnd, err = feisc.FEISC_NewReader(socketHnd)
 	return
 }
@@ -137,7 +137,7 @@ func SetReaderParam(readerHnd int, param string, value string) (result int, err 
 	return
 }
 
-func ResetCpu(readerHnd int) (status int, err error) {
+func ResetCpu(readerHnd int, busAddr byte) (status int, err error) {
 	status, err = feisc.FEISC_0x63_CPUReset(readerHnd, busAddr)
 	return
 }

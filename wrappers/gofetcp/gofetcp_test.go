@@ -12,6 +12,7 @@ func Test(t *testing.T) {
 type S struct {
 	socketHnd int
 }
+var _ = Suite(&S{0})
 
 func (s *S) SetUpTest(c *C) {
 	s.socketHnd, _ = Connect("192.168.20.112", 4001)
@@ -35,25 +36,25 @@ func (s *S) TestDisconnect(c *C) {
 
 func (s *S) TestGetDllVersion(c *C) {
 	version := GetDllVersion()
-	c.Assert(version, HasLen, 7)
+	c.Assert(version, HasLen, 8)
 }
 
 func (s *S) TestGetLastError(c *C) {
-	socketHnd, _ := Connect("127.0.0.1", 4001)
-	errorCode, _, result, _ := GetLastError(socketHnd)
+	GetSocketParam(s.socketHnd, "Unknown")
+	errorCode, _, result, _ := GetLastError(s.socketHnd)
 	c.Assert(result, Equals, 0)
-	c.Assert(errorCode, Equals, FETCP_ERR_TIMEOUT)
+	c.Assert(errorCode, Equals, FETCP_ERR_UNKNOWN_PARAMETER)
 }
 
 func (s *S) TestGetSocketParam(c *C) {
-	value, result, _ := GetSocketParam(socketHnd, "Timeout")
+	value, result, _ := GetSocketParam(s.socketHnd, "Timeout")
 	c.Assert(result, Equals, 0)
 	c.Assert(value, Equals, "3000")
 }
 
 func (s *S) TestSetSocketParam(c *C) {
-	result, _ := SetSocketParam(socketHnd, "Timeout", "10000")
-	value, _, _ := GetSocketParam(socketHnd, "Timeout")
+	result, _ := SetSocketParam(s.socketHnd, "Timeout", "10000")
+	value, _, _ := GetSocketParam(s.socketHnd, "Timeout")
 	c.Assert(result, Equals, 0)
 	c.Assert(value, Equals, "10000")
 }
