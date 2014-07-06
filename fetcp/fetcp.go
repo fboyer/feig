@@ -1,8 +1,10 @@
-package gofeig
+package fetcp
 
 import (
 	"bytes"
-	"github.com/fboyer/feig/native/fetcp"
+	"syscall"
+
+	"github.com/fboyer/feig/fetcp/api"
 )
 
 const (
@@ -45,40 +47,44 @@ const (
 )
 
 func Connect(hostAddr string, port int) (socketHnd int) {
-	socketHnd = fetcp.FETCP_Connect(&([]byte(hostAddr))[0], port)
+	ptrHostAddr, _ := syscall.BytePtrFromString(hostAddr)
+	socketHnd = api.FETCP_Connect(ptrHostAddr, port)
 	return
 }
 
 func Disconnect(socketHnd int) (result int) {
-	result = fetcp.FETCP_Disconnect(socketHnd)
+	result = api.FETCP_Disconnect(socketHnd)
 	return
 }
 
-func GetTcpDllVersion() (version string) {
+func GetDllVersion() (version string) {
 	ver := make([]byte, 256)
-	fetcp.FETCP_GetDLLVersion(&ver[0])
+	api.FETCP_GetDLLVersion(&ver[0])
 	n := bytes.Index(ver, []byte{0})
 	version = string(ver[:n])
 	return
 }
 
-func GetTcpLastError(socketHnd int) (errorCode int, errorText string, result int) {
+func GetLastError(socketHnd int) (errorCode int, errorText string, result int) {
 	text := make([]byte, 256)
-	result = fetcp.FETCP_GetLastError(socketHnd, &errorCode, &text[0])
+	result = api.FETCP_GetLastError(socketHnd, &errorCode, &text[0])
 	n := bytes.Index(text, []byte{0})
 	errorText = string(text[:n])
 	return
 }
 
 func GetSocketParam(socketHnd int, param string) (value string, result int) {
+	ptrParam, _ := syscall.BytePtrFromString(param)
 	val := make([]byte, 128)
-	result = fetcp.FETCP_GetSocketPara(socketHnd, &([]byte(param))[0], &val[0])
+	result = api.FETCP_GetSocketPara(socketHnd, ptrParam, &val[0])
 	n := bytes.Index(val, []byte{0})
 	value = string(val[:n])
 	return
 }
 
 func SetSocketParam(socketHnd int, param string, value string) (result int) {
-	result = fetcp.FETCP_SetSocketPara(socketHnd, &([]byte(param))[0], &([]byte(value))[0])
+	ptrParam, _ := syscall.BytePtrFromString(param)
+	ptrValue, _ := syscall.BytePtrFromString(value)
+	result = api.FETCP_SetSocketPara(socketHnd, ptrParam, ptrValue)
 	return
 }

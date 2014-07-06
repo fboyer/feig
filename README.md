@@ -3,4 +3,4 @@ gofeig
 
 FEIG RFID Reader Wrapper
 
-This wrapper is built for FEIG DLLs (Windows i386) and requires Go (Windows i386) to build correctly.
+This wrapper is built around the FEIG API that's part of the ID ISC package.

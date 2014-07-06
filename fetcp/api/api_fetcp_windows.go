@@ -1,4 +1,5 @@
-package fetcp
+// +build windows
+package api
 
 //sys	FETCP_Connect(cHostAdr *byte, iPortNr int) (result int) = fetcp.FETCP_Connect
 //sys	FETCP_Disconnect(iSocketHnd int) (result int) [failretval!=0] = fetcp.FETCP_DisConnect

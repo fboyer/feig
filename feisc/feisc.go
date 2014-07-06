@@ -1,8 +1,10 @@
-package gofeig
+package feisc
 
 import (
 	"bytes"
-	"github.com/fboyer/feig/native/feisc"
+	"syscall"
+
+	"github.com/fboyer/feig/feisc/api"
 )
 
 const (
@@ -91,54 +93,57 @@ type FEISC_TASK_INIT struct {
 
 // FEISC
 func NewReader(socketHnd int) (readerHnd int) {
-	readerHnd = feisc.FEISC_NewReader(socketHnd)
+	readerHnd = api.FEISC_NewReader(socketHnd)
 	return
 }
 
 func DeleteReader(readerHnd int) (result int) {
-	result = feisc.FEISC_DeleteReader(readerHnd)
+	result = api.FEISC_DeleteReader(readerHnd)
 	return
 }
 
-func GetIscDllVersion() (version string) {
+func GetDllVersion() (version string) {
 	ver := make([]byte, 256)
-	feisc.FEISC_GetDLLVersion(&ver[0])
+	api.FEISC_GetDLLVersion(&ver[0])
 	n := bytes.Index(ver, []byte{0})
 	version = string(ver[:n])
 	return
 }
 
-func GetIscLastError(readerHnd int) (errorCode int, errorText string, result int) {
+func GetLastError(readerHnd int) (errorCode int, errorText string, result int) {
 	text := make([]byte, 256)
-	result = feisc.FEISC_GetLastError(readerHnd, &errorCode, &text[0])
+	result = api.FEISC_GetLastError(readerHnd, &errorCode, &text[0])
 	n := bytes.Index(text, []byte{0})
 	errorText = string(text[:n])
 	return
 }
 
-func GetLastState(readerHnd int) (result int, resultText string) {
+func GetLastState(readerHnd int) (stateText string, result int) {
 	text := make([]byte, 128)
-	result = feisc.FEISC_GetLastState(readerHnd, &text[0])
+	result = api.FEISC_GetLastState(readerHnd, &text[0])
 	n := bytes.Index(text, []byte{0})
-	resultText = string(text[:n])
+	stateText = string(text[:n])
 	return
 }
 
 func GetReaderParam(readerHnd int, param string) (value string, result int) {
+	ptrParam, _ := syscall.BytePtrFromString(param)
 	val := make([]byte, 128)
-	result = feisc.FEISC_GetReaderPara(readerHnd, &([]byte(param))[0], &val[0])
+	result = api.FEISC_GetReaderPara(readerHnd, ptrParam, &val[0])
 	n := bytes.Index(val, []byte{0})
 	value = string(val[:n])
 	return
 }
 
 func SetReaderParam(readerHnd int, param string, value string) (result int) {
-	result = feisc.FEISC_SetReaderPara(readerHnd, &([]byte(param))[0], &([]byte(value))[0])
+	ptrParam, _ := syscall.BytePtrFromString(param)
+	ptrValue, _ := syscall.BytePtrFromString(value)
+	result = api.FEISC_SetReaderPara(readerHnd, ptrParam, ptrValue)
 	return
 }
 
 func ResetCpu(readerHnd int, busAddr byte) (result int) {
-	result = feisc.FEISC_0x63_CPUReset(readerHnd, busAddr)
+	result = api.FEISC_0x63_CPUReset(readerHnd, busAddr)
 	return
 }
 
@@ -149,19 +154,19 @@ func GetSoftVersion(readerHnd int, busAddr byte, dataFormat int) (version string
 	} else {
 		ver = make([]byte, 15)
 	}
-	result = feisc.FEISC_0x65_SoftVersion(readerHnd, busAddr, &ver[0], dataFormat)
+	result = api.FEISC_0x65_SoftVersion(readerHnd, busAddr, &ver[0], dataFormat)
 	n := bytes.Index(ver, []byte{0})
 	version = string(ver[:n])
 	return
 }
 
 func ResetRf(readerHnd int, busAddr byte) (result int) {
-	result = feisc.FEISC_0x69_RFReset(readerHnd, busAddr)
+	result = api.FEISC_0x69_RFReset(readerHnd, busAddr)
 	return
 }
 
 func SetRfOnOff(readerHnd int, busAddr byte, rfState byte) (result int) {
-	result = feisc.FEISC_0x6A_RFOnOff(readerHnd, busAddr, byte(rfState))
+	result = api.FEISC_0x6A_RFOnOff(readerHnd, busAddr, byte(rfState))
 	return
 }
 
@@ -172,30 +177,32 @@ func ReadConfBlock(readerHnd int, busAddr byte, configAddr byte, dataFormat int)
 	} else {
 		block = make([]byte, 29)
 	}
-	result = feisc.FEISC_0x80_ReadConfBlock(readerHnd, busAddr, configAddr, &block[0], dataFormat)
+	result = api.FEISC_0x80_ReadConfBlock(readerHnd, busAddr, configAddr, &block[0], dataFormat)
 	n := bytes.Index(block, []byte{0})
 	configBlock = string(block[:n])
 	return
 }
 
 func WriteConfBlock(readerHnd int, busAddr byte, configAddr byte, configBlock string, dataFormat int) (result int) {
-	result = feisc.FEISC_0x81_WriteConfBlock(readerHnd, busAddr, configAddr, &([]byte(configBlock))[0], dataFormat)
+	ptrConfigBlock, _ := syscall.BytePtrFromString(configBlock)
+	result = api.FEISC_0x81_WriteConfBlock(readerHnd, busAddr, configAddr, ptrConfigBlock, dataFormat)
 	return
 }
 
 func SaveConfBlock(readerHnd int, busAddr byte, configAddr byte) (result int) {
-	result = feisc.FEISC_0x82_SaveConfBlock(readerHnd, busAddr, configAddr)
+	result = api.FEISC_0x82_SaveConfBlock(readerHnd, busAddr, configAddr)
 	return
 }
 
 func ResetConfBlock(readerHnd int, busAddr byte, configAddr byte) (result int) {
-	result = feisc.FEISC_0x83_ResetConfBlock(readerHnd, busAddr, configAddr)
+	result = api.FEISC_0x83_ResetConfBlock(readerHnd, busAddr, configAddr)
 	return
 }
 
 func SendIsoCmd(readerHnd int, busAddr byte, reqData string, reqLen int, dataFormat int) (respData string, respLen int, result int) {
+	ptrReqData, _ := syscall.BytePtrFromString(reqData)
 	resp := make([]byte, 1024)
-	result = feisc.FEISC_0xB0_ISOCmd(readerHnd, busAddr, &([]byte(reqData))[0], reqLen, &resp[0], &respLen, dataFormat)
+	result = api.FEISC_0xB0_ISOCmd(readerHnd, busAddr, ptrReqData, reqLen, &resp[0], &respLen, dataFormat)
 	n := bytes.Index(resp, []byte{0})
 	respData = string(resp[:n])
 	return

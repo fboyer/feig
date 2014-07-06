@@ -1,4 +1,5 @@
-package feisc
+// +build windows
+package api
 
 // Administration functions for Reader Objects
 //sys	FEISC_NewReader(iPortHnd int) (result int) = feisc.FEISC_NewReader
